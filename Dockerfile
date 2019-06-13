@@ -1,19 +1,18 @@
 FROM debian:stable as build_env
 
+ENV STUBBY_VERSION 1.5.2
+
+ENV STUBBY_URL https://getdnsapi.net/dist/getdns-${STUBBY_VERSION}.tar.gz
+
 RUN apt-get update
 RUN apt-get install -y \
-    build-essential git libtool-bin automake libssl-dev libyaml-dev
+    build-essential git libtool-bin automake libssl-dev libyaml-dev curl
 
-RUN git clone https://github.com/getdnsapi/getdns.git
-WORKDIR /getdns
-RUN git submodule update --init
-RUN libtoolize -ci
-RUN autoreconf -fi
-RUN ./configure --enable-stub-only --without-libidn --without-libidn2
+RUN curl -O ${STUBBY_URL}
+RUN tar xvf getdns-${STUBBY_VERSION}.tar.gz
+WORKDIR /getdns-${STUBBY_VERSION}
+RUN ./configure --enable-stub-only --without-libidn --without-libidn2 --with-stubby
 RUN make && make install
-
-WORKDIR /getdns/stubby
-RUN autoreconf -vfi && ./configure && make && make install
 
 RUN strip -s /usr/local/lib/libgetdns.so.10 \
     /usr/local/bin/stubby \
