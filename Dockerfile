@@ -1,9 +1,9 @@
 FROM debian:stretch as build_env
 
-ENV STUBBY_VERSION 1.5.2
+ENV GETDNS_VERSION 1.5.2
 ENV OPENSSL_VERSION 1.1.1c
 
-ENV STUBBY_URL https://getdnsapi.net/dist/getdns-${STUBBY_VERSION}.tar.gz
+ENV STUBBY_URL https://getdnsapi.net/dist/getdns-${GETDNS_VERSION}.tar.gz
 ENV OPENSSL_URL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
 
 RUN apt-get update
@@ -18,8 +18,8 @@ RUN make install_runtime install_dev
 
 WORKDIR /tmp/build
 RUN curl -O ${STUBBY_URL}
-RUN tar xvf getdns-${STUBBY_VERSION}.tar.gz
-WORKDIR /tmp/build/getdns-${STUBBY_VERSION}
+RUN tar xvf getdns-${GETDNS_VERSION}.tar.gz
+WORKDIR /tmp/build/getdns-${GETDNS_VERSION}
 RUN ./configure --enable-stub-only --without-libidn --without-libidn2 \
         --with-stubby --with-ssl=/usr/local
 RUN make && make install
