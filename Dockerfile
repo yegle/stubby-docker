@@ -1,6 +1,8 @@
+# SOURCE_BRANCH maps to getdns version.
+ARG SOURCE_BRANCH=1.5.2
+ARG GETDNS_VERSION=${SOURCE_BRANCH}
 FROM yegle/debian-stable-with-openssl:1.1.1c as build_env
 
-ENV GETDNS_VERSION 1.5.2
 ENV STUBBY_URL https://getdnsapi.net/dist/getdns-${GETDNS_VERSION}.tar.gz
 
 RUN apt-get update
