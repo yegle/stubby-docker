@@ -8,7 +8,7 @@ RUN apt-get update
 RUN apt-get install -y curl libexpat-dev libtool-bin automake libyaml-dev
 
 WORKDIR /tmp/build
-RUN curl -O ${STUBBY_URL}
+RUN curl -v -O ${STUBBY_URL}
 RUN tar xvf getdns-${GETDNS_VERSION}.tar.gz
 WORKDIR /tmp/build/getdns-${GETDNS_VERSION}
 RUN ./configure --enable-stub-only --without-libidn --without-libidn2 \
